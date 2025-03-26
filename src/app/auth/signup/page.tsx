@@ -8,15 +8,14 @@ import { useActionState, useState } from "react"
 
 function Signup() {
 	const [showPassword, setShowPassword] = useState(false)
-	const [state, formAction] = useActionState(createUser, { message: '', errors: { email: '', password: '' } })
-	console.log(state)
+	const [state, formAction] = useActionState(createUser, { message: '', errors: { email: '', password: '' }, values: {} })
 
 	const handleClickShowPassword = () => { setShowPassword(v => !v) }
 	return (
 		<form action={formAction} className="w-full max-w-sm">
 			<Stack spacing={2}>
-				<TextField name='email' label='Email' variant="outlined" type="email" helperText={state.errors.email} error={!!state.errors.email} />
-				<TextField name='password' label='Password' variant="outlined" type={showPassword ? 'text' : 'password'} slotProps={{
+				<TextField name='email' defaultValue={state.values?.email || ''} label='Email' variant="outlined" type="email" helperText={state.errors.email} error={!!state.errors.email} />
+				<TextField name='password' defaultValue={state.values?.password || ''} label='Password' variant="outlined" type={showPassword ? 'text' : 'password'} slotProps={{
 					input: {
 						endAdornment: <InputAdornment position="end">
 							<IconButton
