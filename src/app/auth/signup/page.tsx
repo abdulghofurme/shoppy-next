@@ -9,7 +9,6 @@ import { useActionState, useState } from "react"
 function Signup() {
 	const [showPassword, setShowPassword] = useState(false)
 	const [state, formAction] = useActionState(createUser, { message: '', errors: { email: '', password: '' }, values: {} })
-	console.log(state)
 
 	const handleClickShowPassword = () => { setShowPassword(v => !v) }
 	return (
