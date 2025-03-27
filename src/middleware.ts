@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
+import checkIsAuthenticated from "./util/authenticated";
 
 const unAuthorizedRoutes = ['/auth/login', '/auth/signup']
 
-export default function middleware(request: NextRequest) {
-	const auth = request.cookies.get('Authentication')?.value
+export default async function middleware(request: NextRequest) {
+	const auth = await checkIsAuthenticated()
 
 	if (auth && unAuthorizedRoutes.some(route => request.nextUrl.pathname.startsWith(route))) {
 		return Response.redirect(new URL('/', request.url))
