@@ -25,7 +25,7 @@ export default async function loginUser(
 	_prevState: any,
 	formData: FormData
 ) {
-	const res = await post(`${API_URL}/auth/login`, formData, setAuthCookie)
+	const res = await post(`${API_URL}/auth/login`, { formData, responseCB: setAuthCookie })
 	if (res.error) return { ...res.data, values: Object.fromEntries(formData) }
 
 	redirect('/')
