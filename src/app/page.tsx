@@ -1,6 +1,6 @@
 import getMe from "@/actions/get-me"
 import getProducts from "@/actions/get-products"
-import Products from "../components/Products"
+import Products from "../components/product/Products"
 
 export default async function Home() {
   const me = await getMe()
