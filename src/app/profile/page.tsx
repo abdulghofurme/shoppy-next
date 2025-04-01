@@ -1,8 +1,10 @@
-import getMe from "@/actions/get-me"
+'use client'
 
-export default async function Profile() {
-	const me = await getMe()
+import { useAuthContext } from "@/context/AuthContext"
+
+export default function Profile() {
+	const { user } = useAuthContext()
 	return <>
-		<h1>{me?.email}</h1>
+		<h1>{user?.email}</h1>
 	</>
 }

@@ -1,16 +1,20 @@
 import { cookies } from "next/headers"
 
-const getHeaders = () => ({
-	Cookie: cookies().toString(),
-});
+const getHeaders = async () => {
+	const cookie = await cookies()
+	return {
+		Cookie: cookie.toString(),
+	}
+}
 
 export const post = async (path: string, options?: {
 	formData?: FormData,
 	responseCB?: (res: Response) => Promise<void>
 }) => {
+	const authHeader = await getHeaders()
 	const res = await fetch(path, {
 		method: 'POST',
-		headers: { "Content-Type": 'application/json', ...getHeaders() },
+		headers: { "Content-Type": 'application/json', ...authHeader },
 		...(options?.formData ? {
 			body: JSON.stringify(Object.fromEntries(options.formData))
 		} : {})
@@ -25,8 +29,9 @@ export const post = async (path: string, options?: {
 }
 
 export const get = async (path: string) => {
+	const authHeader = await getHeaders()
 	const res = await fetch(path, {
-		headers: { ...getHeaders() }
+		headers: { ...authHeader }
 	})
 	return res.json()
 }
