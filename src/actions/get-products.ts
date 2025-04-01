@@ -5,5 +5,5 @@ import { TProduct } from "@/types/product"
 import { get } from "@/util/fetch"
 
 export default async function getProducts() {
-	return get<TProduct[]>(`${API_URL}/products`)
+	return get<TProduct[]>(`${API_URL}/products`, { next: { tags: ["products"] } })
 }

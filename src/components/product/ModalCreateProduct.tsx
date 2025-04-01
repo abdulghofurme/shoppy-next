@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Button, Modal, Stack, TextField } from "@mui/material";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 const styles = {
 	position: "absolute",
@@ -21,7 +21,6 @@ export type ModalCreateProductProps = {
 	createProduct: (_prevState: any, formData: FormData) => Promise<any>;
 }
 
-
 function ModalCreateProduct({ open, onClose, createProduct }: ModalCreateProductProps) {
 	const [state, formAction] = useActionState(
 		createProduct,
@@ -31,6 +30,12 @@ function ModalCreateProduct({ open, onClose, createProduct }: ModalCreateProduct
 			values: { name: '', description: '', price: '' },
 		}
 	)
+
+	useEffect(() => {
+		if (state?.message === 'success') {
+			onClose()
+		}
+	}, [state?.message])
 
 	return (
 		<Modal open={open} onClose={onClose}>

@@ -28,10 +28,11 @@ export const post = async (path: string, options?: {
 	return { error: false, data: resJson }
 }
 
-export const get = async <T>(path: string) => {
+export const get = async <T>(path: string, options?: { next: NextFetchRequestConfig }) => {
 	const authHeader = await getHeaders()
 	const res = await fetch(path, {
-		headers: { ...authHeader }
+		headers: { ...authHeader },
+		next: options?.next
 	})
 	return res.json() as T
 }
