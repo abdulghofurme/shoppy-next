@@ -17,7 +17,7 @@ import { useAuthContext } from '@/context/AuthContext';
 import { headerNavigations } from '@/constants/routes';
 import Link from 'next/link';
 
-function Header({ logout }: HeaderUserMenuProps) {
+function Header({ logout  }: HeaderUserMenuProps) {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const { isAuthenticated } = useAuthContext()
 

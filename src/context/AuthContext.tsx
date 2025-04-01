@@ -4,15 +4,19 @@ import { createContext, PropsWithChildren, useContext } from "react"
 
 export type TAuthContext = {
 	isAuthenticated: boolean
+	user: {
+		email: string,
+		userId: number
+	}
 }
 
 const AuthContext = createContext<TAuthContext | undefined>(undefined)
 
 export type AuthProviderProps = TAuthContext & PropsWithChildren
 
-export function AuthProvider({ children, isAuthenticated }: AuthProviderProps) {
+export function AuthProvider({ children, isAuthenticated, user }: AuthProviderProps) {
 	return (
-		<AuthContext.Provider value={{ isAuthenticated }}>
+		<AuthContext.Provider value={{ isAuthenticated, user }}>
 			{children}
 		</AuthContext.Provider>
 	);
