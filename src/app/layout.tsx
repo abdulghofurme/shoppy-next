@@ -8,6 +8,7 @@ import Header from "@/components/header/Header";
 import { AuthProvider } from "@/context/AuthContext";
 import checkIsAuthenticated from "@/util/authenticated";
 import logoutUser from "@/actions/logout-user";
+import getMe from "@/actions/get-me";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const isAuthenticated = await checkIsAuthenticated()
+	const me = await getMe()
   return (
     <html lang="en">
       <body
@@ -37,10 +39,10 @@ export default async function RootLayout({
       >
         <AppRouterCacheProvider>
           <ThemeProvider theme={darkTheme}>
-            <AuthProvider isAuthenticated={isAuthenticated}>
+            <AuthProvider isAuthenticated={isAuthenticated} user={me}>
               <CssBaseline />
               <Header logout={logoutUser} />
-              <Container>
+              <Container className="p-4">
                 {children}
               </Container>
             </AuthProvider>
