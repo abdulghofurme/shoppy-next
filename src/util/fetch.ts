@@ -28,10 +28,10 @@ export const post = async (path: string, options?: {
 	return { error: false, data: resJson }
 }
 
-export const get = async (path: string) => {
+export const get = async <T>(path: string) => {
 	const authHeader = await getHeaders()
 	const res = await fetch(path, {
 		headers: { ...authHeader }
 	})
-	return res.json()
+	return res.json() as T
 }

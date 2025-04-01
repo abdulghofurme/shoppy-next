@@ -1,13 +1,11 @@
 'use client'
 
+import { TUser } from "@/types/user"
 import { createContext, PropsWithChildren, useContext } from "react"
 
 export type TAuthContext = {
 	isAuthenticated: boolean
-	user: {
-		email: string,
-		userId: number
-	}
+	user: TUser
 }
 
 const AuthContext = createContext<TAuthContext | undefined>(undefined)
