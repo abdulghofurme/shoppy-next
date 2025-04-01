@@ -1,4 +1,5 @@
 import { Box, Tooltip, IconButton, Avatar, Menu, MenuItem, Typography } from '@mui/material'
+import Link from 'next/link';
 import { MouseEvent, useState } from 'react';
 
 export type HeaderUserMenuProps = {
@@ -39,6 +40,12 @@ function HeaderUserMenu({ logout }: HeaderUserMenuProps) {
 				open={Boolean(anchorElUser)}
 				onClose={handleCloseUserMenu}
 			>
+				<MenuItem component={Link} href='/profile'>
+					<Typography sx={{ textAlign: 'center' }}>Profile</Typography>
+				</MenuItem>
+				<MenuItem component={Link} href='/products'>
+					<Typography sx={{ textAlign: 'center' }}>Products</Typography>
+				</MenuItem>
 				<MenuItem onClick={async () => {
 					await logout()
 					handleCloseUserMenu()
