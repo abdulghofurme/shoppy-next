@@ -10,13 +10,19 @@ const getHeaders = async () => {
 export const post = async (path: string, options?: {
 	formData?: FormData,
 	responseCB?: (res: Response) => Promise<void>
+	payloadType?: 'json' | 'formData'
 }) => {
 	const authHeader = await getHeaders()
 	const res = await fetch(path, {
 		method: 'POST',
-		headers: { "Content-Type": 'application/json', ...authHeader },
+		headers: {
+			...(options?.payloadType === 'formData' ? {} : { "Content-Type": 'application/json' }),
+			...authHeader,
+		},
 		...(options?.formData ? {
-			body: JSON.stringify(Object.fromEntries(options.formData))
+			body: options.payloadType === 'formData' ?
+				options.formData :
+				JSON.stringify(Object.fromEntries(options.formData)),
 		} : {})
 	})
 	if (options?.responseCB) await options?.responseCB?.(res)

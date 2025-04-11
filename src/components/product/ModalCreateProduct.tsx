@@ -1,7 +1,8 @@
 'use client'
 
-import { Box, Button, Modal, Stack, TextField } from "@mui/material";
-import { useActionState, useEffect } from "react";
+import { CloudUpload } from "@mui/icons-material";
+import { Box, Button, Modal, Stack, TextField, Typography } from "@mui/material";
+import { useActionState, useEffect, useState } from "react";
 
 const styles = {
 	position: "absolute",
@@ -30,15 +31,22 @@ function ModalCreateProduct({ open, onClose, createProduct }: ModalCreateProduct
 			values: { name: '', description: '', price: '' },
 		}
 	)
+	const [fileName, setFileName] = useState('')
+	console.log(state)
+
+	const handleClose = () => {
+		onClose()
+		setFileName('')
+	}
 
 	useEffect(() => {
 		if (state?.message === 'success') {
-			onClose()
+			handleClose()
 		}
 	}, [state?.message])
 
 	return (
-		<Modal open={open} onClose={onClose}>
+		<Modal open={open} onClose={handleClose}>
 			<Box sx={styles}>
 				<form
 					className="w-full max-w-xs"
@@ -72,6 +80,20 @@ function ModalCreateProduct({ open, onClose, createProduct }: ModalCreateProduct
 							helperText={state?.error?.price}
 							error={!!state?.error?.price}
 						/>
+						<Button
+							component='label'
+							variant='outlined'
+							startIcon={<CloudUpload />}
+						>
+							Upload image
+							<input type='file' name='image' className="!hidden" onChange={(e) => {
+								if (e.target.files?.length) {
+									setFileName(e.target.files[0].name)
+								}
+							}} />
+						</Button>
+						<Typography>{fileName}</Typography>
+						<Typography className="!text-red-600" variant="overline">{state?.error}</Typography>
 						<Button type="submit" variant="contained">
 							Submit
 						</Button>
